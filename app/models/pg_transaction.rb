@@ -1,0 +1,2 @@
+class PgTransaction < ApplicationRecord
+end
