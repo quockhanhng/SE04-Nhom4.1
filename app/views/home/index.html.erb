@@ -1,0 +1,7 @@
+<html lang="vi">
+<h1>Hello-world</h1>
+<% if user_signed_in? %>
+  <%= link_to "Log out", logout_path, method: :delete %>
+<% end %>
+<%= link_to "Log in", login_path %>
+</html>
