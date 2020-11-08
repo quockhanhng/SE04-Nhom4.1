@@ -5,13 +5,16 @@
 <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track": "reload" %>
 <%= javascript_pack_tag "application", "data-turbolinks-track": "reload" %>
 
-<link rel="stylesheet" href="../Fonts/linearicons/style.css">
-<link rel="stylesheet" href="app/assets/stylesheets/login.scss">
+<!--<link rel="stylesheet" href="../Fonts/linearicons/style.css">-->
+<!--<link rel="stylesheet" href="app/assets/stylesheets/login.scss">-->
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <body>
+<% flash.each do |message_type, message| %>
+  <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+<% end %>
 <%= yield %>
 </body>
