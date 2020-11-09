@@ -8,4 +8,9 @@ Rails.application.routes.draw do
     post "/login", to: "devise/sessions#create"
     delete "/logout", to: "devise/sessions#destroy"
   end
+
+  namespace :admins do
+    root "home#index"
+    resources :categories
+  end
 end
