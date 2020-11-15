@@ -1,0 +1,53 @@
+<div class="page-wrapper chiller-theme toggled">
+  <%= render "sellers/sidebar" %>
+  <main class="page-content">
+    <div class="container-fluid">
+      <h2>DANH SÁCH QUYỂN SÁCH CỦA BẠN</h2>
+      <div class="main py-4">
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <%= link_to "Thêm mới sách", new_sellers_product_path, class: "btn btn-outline-primary float-right", style: "border-color: #007bff;" %>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                  <tr style="color:White;background-color:#006699;font-weight:bold;">
+                    <th scope="col">ID</th>
+                    <th scope="col">Tên sách</th>
+                    <th scope="col">Đơn giá (VNĐ)</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Ảnh minh họa</th>
+                    <th scope="col">Thuộc danh mục</th>
+                    <th style="width: 10%;"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @products.each do |product| %>
+                    <tr>
+                      <td><%= product.id %></td>
+                      <td><%= product.name %></td>
+                      <td><%= product.price %></td>
+                      <td><%= product.quantity %></td>
+                      <td><%= product.in_stock? ? "Còn hàng" : "Hết hàng" %></td>
+                      <% if product.image? %>
+                        <td><%= image_tag product.image.url, size: "150x150" %></td>
+                      <% end %>
+                      <td><%= product.find_name_category %></td>
+                      <td>
+                        <%= link_to "Sửa", edit_sellers_product_path(product), class: "btn btn-success" %>
+                      </td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

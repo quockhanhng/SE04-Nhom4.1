@@ -34,13 +34,19 @@
           </a>
         </li>
         <li class="sidebar-dropdown">
-          <a href="#">
+          <%= link_to sellers_products_path do %>
             <i class="fa fa-book" aria-hidden="true"></i>
             <span>QUẢN LÝ SÁCH</span>
-          </a>
+          <% end %>
         </li>
         <li class="sidebar-dropdown">
-          <%= link_to admins_categories_path do %>
+          <%= link_to new_sellers_product_path do %>
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <span>THÊM MỚI SÁCH</span>
+          <% end %>
+        </li>
+        <li class="sidebar-dropdown">
+          <%= link_to sellers_categories_path do %>
             <i class="fa fa-list-alt" aria-hidden="true"></i>
             <span>CÁC DANH MỤC</span>
           <% end %>
@@ -62,26 +68,11 @@
         </li>
         <li>
           <a href="#">
-            <i class="fa fa-user" aria-hidden="true"></i>
-            <span>NGƯỜI DÙNG</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="fa fa-shopping-cart"></i>
-            <span>GIỎ HÀNG</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
             <i class="fa fa-list-ol" aria-hidden="true"></i>
             <span>XẾP HẠNG</span>
           </a>
         </li>
       </ul>
-    </div>
-    <div class="sidebar-footer">
-      <%= link_to "Đăng xuất", logout_path, method: :delete, class: "btn btn-danger" %>
     </div>
   </div>
 </nav>

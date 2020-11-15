@@ -422,19 +422,6 @@ section.navbar {
   border-bottom: 1px solid #eee;
 }
 
-.product-box:hover {
-  background-color: #eb4800;
-  -webkit-transition: all 0.2s linear;
-  -moz-transition: all 0.2s linear;
-  -o-transition: all 0.2s linear;
-  transition: all 0.2s linear;
-  box-shadow: 0 0 5px #ccc;
-}
-
-.product-box:hover a {
-  color: #fff !important;
-}
-
 .product-box img {
   overflow: hidden;
 }
