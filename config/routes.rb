@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     delete "/logout", to: "devise/sessions#destroy"
   end
 
+  resources :products, only: :show
+
   namespace :admins do
     root "home#index"
     resources :categories

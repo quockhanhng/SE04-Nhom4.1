@@ -1,0 +1,80 @@
+<%= render "share/header" %>
+<div id="wrapper" class="container show_product_buyer">
+  <div class="path_product mb-5">
+    <%= link_to "Trang chủ", root_path %><span> / </span>
+    <%= link_to @product.find_name_category, root_path %><span> / </span>
+    <%= @product.name %>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <%= image_tag @product.image.url, size: "350x350" %>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-7">
+      <div class="title">
+        <%= @product.name %>
+      </div>
+      <div class="author release mt-4 d-flex justify-content-between">
+        <span><b>Tác giả:  </b>...</span> |
+        <span><b>Nhà phát hành: </b> Tuổi trẻ</span> |
+        <span class="text-info"><b>Tình trạng: </b> <%= @product.in_stock? ? "Còn hàng" : "Hết hàng" %></span> |
+        <span><b>Số lượng: </b> <%= @product.quantity %></span>
+      </div>
+      <div class="price mt-4">
+        <span class="ml-5"><%= number_to_currency(@product.price.to_i, precision: 0) %> ₫</span>
+        <%= link_to "Thêm vào giỏ", "#", class: "btn btn-primary float-right mr-5 mt-3 btn-lg" %><br>
+      </div>
+      <div class="ml-5">
+        Giá bìa: 249.000 ₫ Tiết kiệm: 49.800 ₫ (-20%)
+      </div>
+      <ul class="mt-5 list-group">
+        <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i> Bọc Plastic miễn phí</li>
+        <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i> Giao hàng miễn phí trong nội thành
+          TP. HCM với đơn hàng ≥ 150.000 đ
+        </li>
+        <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i> Giao hàng miễn phí toàn quốc với đơn
+          hàng ≥ 250.000 đ
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr>
+  <div class="display-4"><b>Giới Thiệu Sách</b></div>
+  <hr>
+  <div class="text-danger"><%= @product.name %></div>
+  <br>
+  <div><%= @product.description %></div>
+  <hr>
+  <div class="display-4"><b>Thông Tin Chi Tiết</b></div>
+  <hr>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th scope="col">Tác giả</th>
+      <th scope="col">Phát hành</th>
+      <th scope="col">NXB</th>
+      <th scope="col">Kích thước</th>
+      <th scope="col">Trọng lượng (g)</th>
+      <th scope="col">Lượt xem</th>
+      <th scope="col">Ngày phát hành</th>
+      <th scope="col">Danh mục</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">...</th>
+      <th scope="row">Tuổi trẻ</th>
+      <th scope="row">Tuổi trẻ</th>
+      <th scope="row">14,5cm x20,5cm</th>
+      <th scope="row">1000</th>
+      <th scope="row">142</th>
+      <th scope="row"><%= @product.created_at.strftime("%d/%m/%Y") %></th>
+      <th scope="row"><%= @product.find_name_category %></th>
+    </tr>
+    </tbody>
+  </table>
+  <hr>
+  <div class="display-4"><b>Sách Cùng Tác Giả</b></div>
+  <hr>
+  <%= render "share/footer" %>
+</div>
