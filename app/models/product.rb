@@ -9,5 +9,11 @@ class Product < ApplicationRecord
   validates :status, presence: true
   validates :description, presence: true
 
+  mount_uploader :image, ImageUploader
+
   enum status: [:in_stock, :out_of_stock].freeze
+
+  def find_name_category
+    category.name
+  end
 end
