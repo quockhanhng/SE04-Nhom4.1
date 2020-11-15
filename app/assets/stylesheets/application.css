@@ -3,7 +3,3 @@
  *= require_tree .
  *= require_self
  */
-
-.alert {
-  padding-left: 50% !important;
-}
