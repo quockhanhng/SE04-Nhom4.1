@@ -1,0 +1,38 @@
+<div class="page-wrapper chiller-theme toggled">
+  <%= render "sellers/sidebar" %>
+  <main class="page-content">
+    <div class="container-fluid">
+      <h2>DANH SÁCH DANH MỤC CỦA SÁCH</h2>
+      <div class="main py-4">
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+              </div>
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                  <tr style="color:White;background-color:#006699;font-weight:bold;">
+                    <th scope="col">Tên danh mục</th>
+                    <th scope="col">Danh mục cha</th>
+                    <th scope="col">Slug</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @categories.each do |category| %>
+                    <tr>
+                      <td><%= category.name %></td>
+                      <td><%= @id_name[category.parent_id].present? ? @id_name[category.parent_id] : "Không thuộc danh mục cha" %></td>
+                      <td><%= category.slug %></td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

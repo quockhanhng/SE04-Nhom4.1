@@ -13,4 +13,10 @@ Rails.application.routes.draw do
     root "home#index"
     resources :categories
   end
+
+  namespace :sellers do
+    root "home#index"
+    resources :categories, only: :index
+    resources :products
+  end
 end

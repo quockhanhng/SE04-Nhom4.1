@@ -19,4 +19,9 @@ $(document).on('turbolinks:load', function () {
     });
 
     $(".alert").delay(3500).fadeOut();
+
+    $('#customFile').on('change', function () {
+        let fileName = $(this).val();
+        $(this).next('.custom-file-label').html(fileName);
+    })
 })

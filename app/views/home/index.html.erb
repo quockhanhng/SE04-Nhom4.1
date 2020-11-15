@@ -1,18 +1,31 @@
 <head>
+  <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <style>
+    .dropdown:hover > .dropdown-menu {
+      display: block;
+    }
+  </style>
 </head>
 <body>
 <div id="top-bar" class="container">
   <div class="row">
-    <div class="col-7">
-      <input type="text" class="form-control" placeholder="Tìm kiếm sách theo tên">
+    <div class="col-6">
+      <input type="text" class="form-control" placeholder="Tìm kiếm sách theo tên" aria-label="">
     </div>
-    <div class="col-5">
+    <div class="col-6">
       <div class="account float-right">
         <ul class="user-menu">
+          <% if user_signed_in? %>
+            <li><%= link_to "Đăng xuất", logout_path, method: :delete %></li>
+          <% else %>
+            <li><%= link_to "Đăng nhập", login_path %></li>
+          <% end %>
           <li><a href="#">Tất cả danh mục</a></li>
-          <li><a href="#">Tài khoản của tôi</a></li>
+          <% if user_signed_in? %>
+            <li><a href="#">Tài khoản của tôi</a></li>
+          <% end %>
           <li><a href="">Giỏ hàng <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a></li>
         </ul>
       </div>
@@ -25,11 +38,6 @@
       <a href="" class="logo "><%= image_tag("logo.png", alt: "", class: "site_logo") %></a>
       <nav id="menu">
         <ul>
-          <style>
-            .dropdown:hover > .dropdown-menu {
-              display: block;
-            }
-          </style>
           <li class="dropdown">
             <a href="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Văn
               học nước ngoài</a>
@@ -97,67 +105,25 @@
             </h4>
             <div id="book_carousel" class="book_carousel carousel slide">
               <div class="carousel-inner">
-                <div class="active item">
-                  <div class="d-flex justify-content-between">
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book1.jpeg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book1.jpeg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book1.jpeg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book1.jpeg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">You think fast</a><br/>
-                      <a href="" class="category">World once</a>
-                      <p class="price">$31.45</p>
+                <% @product_group_four.each_with_index do |products, index| %>
+                  <div class="<%= index == 0 ? 'active' : '' %> item">
+                    <div class="d-flex justify-content-between">
+                      <% products.each do |product| %>
+                        <div class="product-box">
+                          <p><a href=""><%= image_tag(product.image.url, size: "200x250") %></a></p>
+                          <a href="" class="title"><%= product.name %></a><br/>
+                          <a href="" class="category"><%= product.find_name_category %></a>
+                          <p class="price"><%= product.price %>đ</p>
+                        </div>
+                      <% end %>
                     </div>
                   </div>
-                </div>
-                <div class="item">
-                  <div class="d-flex justify-content-between">
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book2.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book2.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book2.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book2.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">You think fast</a><br/>
-                      <a href="" class="category">World once</a>
-                      <p class="price">$31.45</p>
-                    </div>
-                  </div>
-                </div>
+                <% end %>
               </div>
             </div>
           </div>
+          <br/>
         </div>
-        <br/>
       </div>
     </div>
     <div class="row">
@@ -177,62 +143,20 @@
             </h4>
             <div id="book1_carousel" class="book_carousel carousel slide">
               <div class="carousel-inner">
-                <div class="active item">
-                  <div class="d-flex justify-content-between">
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book3.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book3.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book3.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book3.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">You think fast</a><br/>
-                      <a href="" class="category">World once</a>
-                      <p class="price">$31.45</p>
+                <% @product_group_four_sf.each_with_index do |products, index| %>
+                  <div class="<%= index == 0 ? 'active' : '' %> item">
+                    <div class="d-flex justify-content-between">
+                      <% products.each do |product| %>
+                        <div class="product-box">
+                          <p><a href=""><%= image_tag(product.image.url, size: "200x250") %></a></p>
+                          <a href="" class="title"><%= product.name %></a><br/>
+                          <a href="" class="category"><%= product.find_name_category %></a>
+                          <p class="price"><%= product.price %>đ</p>
+                        </div>
+                      <% end %>
                     </div>
                   </div>
-                </div>
-                <div class="item">
-                  <div class="d-flex justify-content-between">
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book2.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book2.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book2.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">Know exactly turned</a><br/>
-                      <a href="" class="category">Quis nostrud</a>
-                      <p class="price">$14.20</p>
-                    </div>
-                    <div class="product-box">
-                      <p><a href=""><%= image_tag("book2.jpg", alt: "", class: "site_logo", size: "250x250") %></a></p>
-                      <a href="" class="title">You think fast</a><br/>
-                      <a href="" class="category">World once</a>
-                      <p class="price">$31.45</p>
-                    </div>
-                  </div>
-                </div>
+                <% end %>
               </div>
             </div>
           </div>

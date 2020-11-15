@@ -1,0 +1,39 @@
+<div class="page-wrapper chiller-theme toggled">
+  <%= render "sellers/sidebar" %>
+  <main class="page-content">
+    <div class="container-fluid">
+      <h2 class="text-center">THÊM SÁCH MỚI</h2>
+      <%= form_for :product, url: sellers_products_path(:product), method: :post do |f| %>
+        <div class="form-group">
+          <%= f.label "Tên sách" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "Nhập tên sách" %>
+        </div>
+        <div class="form-group">
+          <%= f.label "Đơn giá" %>
+          <%= f.number_field :price, class: "form-control", placeholder: "Nhập đơn giá, ví dụ: 100000" %>
+        </div>
+        <div class="form-group">
+          <div class="custom-file">
+            <%= f.file_field :image, class: "custom-file-input", id: "customFile", accept: "image/jpeg, image/gif, image/png, image/jpg" %>
+            <%= f.label "Chọn ảnh minh hoa", class: "custom-file-label", for: "customFile" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label "Số lượng" %>
+          <%= f.number_field :quantity, class: "form-control", placeholder: "Nhập số lượng sản phẩm có sẵn" %>
+        </div>
+        <div class="form-group">
+          <%= f.label "Chọn danh mục" %><br>
+          <%= f.select :category_id, options_for_select(@options), {}, {class: "form-control"} %>
+        </div>
+        <div class="form-group">
+          <%= f.label "Giới thiệu chi tiết" %>
+          <%= f.text_area :description, class: "form-control", placeholder: "Giới thiệu cho cuốn sách" %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "Thêm mới sách", class: "btn btn-primary float-right" %>
+        </div>
+      <% end %>
+    </div>
+  </main>
+</div>
