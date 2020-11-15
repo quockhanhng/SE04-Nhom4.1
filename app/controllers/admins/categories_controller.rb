@@ -1,6 +1,7 @@
 class Admins::CategoriesController < ApplicationController
   before_action :load_category, except: %i(index new create)
   before_action :authenticate_user!
+  before_action :check_role
 
   def index
     @categories = Category.all
@@ -56,5 +57,11 @@ class Admins::CategoriesController < ApplicationController
 
     flash[:danger] = "Không tìm thấy danh mục phù hợp"
     redirect_to admins_root_path
+  end
+
+  def check_role
+    unless current_user.admin?
+      redirect_to root_path
+    end
   end
 end

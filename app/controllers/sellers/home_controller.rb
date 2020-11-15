@@ -1,4 +1,4 @@
-class Admins::HomeController < ApplicationController
+class Sellers::HomeController < ApplicationController
   before_action :authenticate_user!
   before_action :check_role
 
@@ -7,7 +7,7 @@ class Admins::HomeController < ApplicationController
   private
 
   def check_role
-    unless current_user.admin?
+    unless current_user.seller?
       redirect_to root_path
     end
   end
