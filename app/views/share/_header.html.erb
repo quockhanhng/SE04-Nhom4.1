@@ -1,0 +1,60 @@
+<head>
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <style>
+    .dropdown:hover > .dropdown-menu {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<div id="top-bar" class="container">
+  <div class="row">
+    <div class="col-6">
+      <input type="text" class="form-control" placeholder="Tìm kiếm sách theo tên" aria-label="">
+    </div>
+    <div class="col-6">
+      <div class="account float-right">
+        <ul class="user-menu">
+          <% if user_signed_in? %>
+            <li><%= link_to "Đăng xuất", logout_path, method: :delete %></li>
+          <% else %>
+            <li><%= link_to "Đăng nhập", login_path %></li>
+          <% end %>
+          <li><a href="#">Tất cả danh mục</a></li>
+          <% if user_signed_in? %>
+            <li><a href="#">Tài khoản của tôi</a></li>
+          <% end %>
+          <li><a href="">Giỏ hàng (0) <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="wrapper" class="container">
+  <section class="navbar main-menu">
+    <div class="navbar-inner main-menu w-100 d-flex justify-content-between">
+      <%= link_to root_path, class: "logo" do %>
+      <%= image_tag("logo.png", alt: "", class: "site_logo") %>
+      <% end %>
+      <nav id="menu">
+        <ul>
+          <li class="dropdown">
+            <a href="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Văn
+              học nước ngoài</a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Tiểu sử - hồi ký</a>
+              <a class="dropdown-item" href="#">Trinh thám - kinh dị</a>
+              <a class="dropdown-item" href="#">Huyền bí - giả tưởng</a>
+            </div>
+          </li>
+          <li><a href="">Văn học trong nước</a></li>
+          <li><a href="">Sách kĩ năng sống</a></li>
+          <li><a href="">Sách chuyên ngành</a></li>
+          <li><a href="">Vừa học - vừa chơi</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+</div>
