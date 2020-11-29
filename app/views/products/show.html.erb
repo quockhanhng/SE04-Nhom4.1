@@ -20,9 +20,14 @@
         <span class="text-info"><b>Tình trạng: </b> <%= @product.in_stock? ? "Còn hàng" : "Hết hàng" %></span> |
         <span><b>Số lượng: </b> <%= @product.quantity %></span>
       </div>
-      <div class="price mt-4">
+      <div class="price mt-4 d-flex justify-content-between">
         <span class="ml-5"><%= number_to_currency(@product.price.to_i, precision: 0) %> ₫</span>
-        <%= link_to "Thêm vào giỏ", "#", class: "btn btn-primary float-right mr-5 mt-3 btn-lg" %><br>
+        <div>
+          <%= form_tag cart_items_path, method: :post, id: "add_to_cart" do %>
+            <%= text_field_tag :product_id, @product.id, { class: "d-none" } %>
+            <%= submit_tag "Thêm vào giỏ", class: "btn btn-primary float-right mr-5 mt-3 btn-lg", id: "" %><br>
+          <% end %>
+        </div>
       </div>
       <div class="ml-5">
         Giá bìa: 249.000 ₫ Tiết kiệm: 49.800 ₫ (-20%)

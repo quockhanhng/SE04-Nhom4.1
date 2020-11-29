@@ -1,0 +1,12 @@
+vi:
+  pg_transaction:
+    wait_payment: "Đợi thanh toán"
+    paid: "Đã thanh toán"
+    transfer_success: "Thanh toán thành công"
+    shipping: "Đang vận chuyển"
+    shipped: "Đã vận chuyển"
+    done: "Giao dịch thành công"
+    cancel: "Hủy"
+    paypal: "PAYPAL"
+    vnpay: "VNPay"
+  hello: "Hello world"

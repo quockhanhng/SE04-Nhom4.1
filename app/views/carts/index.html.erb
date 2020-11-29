@@ -1,0 +1,29 @@
+<%= render "share/header" %>
+<div id="wrapper" class="container">
+  <% if @cart_items.present? %>
+    <h3>Giỏ hàng của tôi</h3>
+    <div class="cart-page-product-header row">
+      <div class="col-4"><p>Sản phẩm trong giỏ</p></div>
+      <div class="col-2"><p>Giá bán</p></div>
+      <div class="col-2"><p>Số lượng</p></div>
+      <div class="col-2"><p>Thành tiền</p></div>
+      <div class="col-2"><p>Thao tác</p></div>
+    </div>
+    <div class="line"></div>
+    <% @cart_items.each do |cart_item| %>
+      <div id="cart_item_<%= cart_item.id %>">
+        <%= render "cart_item", cart_item: cart_item %>
+      </div>
+    <% end %>
+    <div class="check_out">
+      <%= render "check_out", cart: @cart %>
+    </div>
+  <% else %>
+    <div class="text-center cart_empty mt-5">
+      <%= image_tag "cart_empty.png" %>
+      <div class="text">Giỏ hàng của bạn còn trống</div>
+      <%= link_to "Mua ngay", root_path, class: "btn btn-success btn-lg btn_buy_now" %>
+    </div>
+  <% end %>
+  <%= render "share/footer" %>
+</div>

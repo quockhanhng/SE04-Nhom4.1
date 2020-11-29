@@ -1,0 +1,3 @@
+$("#cart_item_<%= @cart_item.id %>").fadeOut("")
+$(".check_out").html("<%= j render("carts/check_out", cart: @cart_item.cart) %>")
+$(".go_to_cart").html("<%= j render("carts/go_to_cart", cart: @cart_item.cart) %>")

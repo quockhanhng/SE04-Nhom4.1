@@ -6,5 +6,6 @@ class PgTransaction < ApplicationRecord
   validates :total_delivery_fee, presence: true
   validates :payment_type, presence: true
 
-  enum payment_type: [:wait_payment, :paid, :transfer_success, :shipping, :shipped, :done, :cancel].freeze
+  enum status: [:wait_payment, :paid, :transfer_success, :shipping, :shipped, :done, :cancel].freeze
+  enum payment_type: [:paypal, :vnpay].freeze
 end

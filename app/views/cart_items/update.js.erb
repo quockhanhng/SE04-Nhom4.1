@@ -1,0 +1,21 @@
+$("#cart_item_<%= @cart_item.id %>").html("<%= j render("carts/cart_item", cart_item: @cart_item) %>")
+$(".check_out").html("<%= j render("carts/check_out", cart: @cart_item.cart) %>")
+function addEventChangeForInput(input) {
+    input.addEventListener("change", function () {
+        let url = this.parentElement.parentElement.lastElementChild.href
+        let quantity = this.value <= 0 ? 1 : this.value
+        $.ajax({
+            type: "PUT",
+            url: url,
+            data: {quantity: quantity},
+            success: function () {
+            }
+        })
+    })
+}
+
+var inputs = $('.quantity').children()
+for (let i = 0; i < inputs.length; i++) {
+    addEventChangeForInput(inputs[i])
+}
+

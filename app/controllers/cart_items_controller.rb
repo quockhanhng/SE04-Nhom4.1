@@ -1,6 +1,9 @@
 class CartItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_role
+  before_action :find_cart_item, only: [:update, :destroy]
+  skip_before_action :verify_authenticity_token
+
 
   def create
     @product = Product.find_by_id(params[:product_id])
@@ -22,11 +25,27 @@ class CartItemsController < ApplicationController
     end
   end
 
+  def update
+    @quantity_update = params[:quantity]
+    @cart_item.quantity = @quantity_update
+    @cart_item.amount = @cart_item.amount_calc
+    @cart_item.save!
+  end
+
+  def destroy
+    redirect_to root_path unless @cart_item.destroy
+  end
+
   private
 
   def check_role
     unless current_user.buyer?
       redirect_to root_path
     end
+  end
+
+  def find_cart_item
+    @cart_item = CartItem.find_by_id(params[:id])
+    redirect_to root_path unless @cart_item
   end
 end
