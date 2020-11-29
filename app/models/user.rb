@@ -11,4 +11,8 @@ class User < ApplicationRecord
   validates :address, presence: true
 
   enum role: [:admin, :buyer, :seller]
+
+  def cart_active
+    carts.where(status: "active").first
+  end
 end
