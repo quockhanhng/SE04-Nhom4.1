@@ -13,7 +13,7 @@ class CartItem < ApplicationRecord
   # end
   #
 
-  def amount
+  def amount_calc
     quantity * price
   end
 end
