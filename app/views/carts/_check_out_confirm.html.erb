@@ -1,0 +1,94 @@
+<head>
+  <script>
+      paypal.Buttons({
+          style: {
+              layout: 'horizontal'
+          },
+          createOrder: function (data, actions) {
+              return actions.order.create({
+                  purchase_units: [{
+                      amount: {
+                          value: <%= ((cart.total_delivery_fee.to_i + cart.total_amount.to_i)*0.000043).round(2) %>
+                      }
+                  }]
+              });
+          },
+          onApprove: function (data, actions) {
+              return actions.order.capture().then(function (details) {
+                  alert('Thanh toán hoàn thành!');
+                  $.ajax({
+                      url: "/pg_transaction",
+                      type: "post",
+                      data: {
+                          details: details,
+                          cart_id: <%= cart.id %>,
+                          total_delivery_fee: <%= (cart.total_delivery_fee.to_i*0.000043).round(2) %>
+                      }
+                  })
+              });
+          }
+      }).render('#paypal-button-container');
+  </script>
+</head>
+<div class="checkout_area">
+  <div class="row">
+    <div class="col-6">
+    </div>
+    <div class="col-2"></div>
+    <div class="col-4">
+      <div class="cardtool">
+        <% total_amout_refact = number_to_currency(cart.total_amount.to_i, precision: 0, unit: "") %>
+        <% total_delivery_fee_refact = number_to_currency(cart.total_delivery_fee.to_i, precision: 0, unit: "") %>
+        <div class="row">
+          <div class="col-6">
+            <b>Tổng tiền:</b><br>
+            <b>Phí vận chuyển:</b><br>
+            <b>Mã giảm giá:</b><br>
+          </div>
+          <div class="col-6">
+            <b> <%= total_amout_refact %>₫</b><br>
+            <b> <%= total_delivery_fee_refact %>₫</b><br>
+            <b><%= "-0" %>₫</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-6 d-flex align-items-center">
+    </div>
+    <div class="col-2"></div>
+    <div class="col-4 text-center">
+      <div class="d-flex justify-content-around align-items-center">
+        <div class="cart-subtotal">
+          <b>Thành
+            tiền: <%= number_to_currency(cart.total_delivery_fee.to_i + cart.total_amount.to_i, precision: 0, unit: "") %>
+            ₫</b>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Thanh toán
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade mt-5" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chọn phương thức thanh toán</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div id="paypal-button-container"></div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
