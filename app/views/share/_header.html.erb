@@ -17,16 +17,14 @@
     <div class="col-6">
       <div class="account float-right">
         <ul class="user-menu">
-          <% if user_signed_in? %>
-            <li><%= link_to "Đăng xuất", logout_path, method: :delete %></li>
-          <% else %>
-            <li><%= link_to "Đăng nhập", login_path %></li>
-          <% end %>
+          <li><%= link_to "Các giao dịch", pg_transaction_index_path %></li>
           <li><a href="#">Tất cả danh mục</a></li>
           <% if user_signed_in? %>
-            <li><a href="#">Tài khoản của tôi</a></li>
+            <li><a href="#">Tài khoản</a></li>
           <% end %>
-          <li><a href="">Giỏ hàng (0) <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a></li>
+          <li class="go_to_cart">
+            <%= render "carts/go_to_cart", cart: current_user.cart_active %>
+          </li>
         </ul>
       </div>
     </div>

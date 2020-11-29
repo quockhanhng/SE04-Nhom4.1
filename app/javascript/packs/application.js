@@ -5,6 +5,7 @@ require("channels")
 import 'bootstrap';
 import '../stylesheets/application';
 import "@fortawesome/fontawesome-free/js/all";
+import './cart_items'
 
 document.addEventListener("turbolinks:load", () => {
     $('[data-toggle="tooltip"]').tooltip()
@@ -13,10 +14,10 @@ document.addEventListener("turbolinks:load", () => {
 $(document).on('turbolinks:load', function () {
     $("#close-sidebar").click(function () {
         $(".page-wrapper").removeClass("toggled");
-    });
+    })
     $("#show-sidebar").click(function () {
         $(".page-wrapper").addClass("toggled");
-    });
+    })
 
     $(".alert").delay(3500).fadeOut();
 

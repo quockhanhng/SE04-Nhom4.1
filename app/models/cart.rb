@@ -8,4 +8,8 @@ class Cart < ApplicationRecord
   def total_amount
     cart_items.sum(:amount)
   end
+
+  def total_delivery_fee
+    cart_items.map { |cart_item| cart_item.delivery_fee }.sum
+  end
 end

@@ -1,0 +1,34 @@
+<div class="checkout_area">
+  <div class="row">
+    <div class="col-6">
+      <div class="d-flex align-items-center justify-content-sm-around">
+        <input type="text" class="form-control" placeholder="Mã giảm giá...">
+        <button class="btn btn-sm btn-info">Áp dụng</button>
+      </div>
+    </div>
+    <div class="col-3"></div>
+    <div class="col-3">
+      <div class="cardtool">
+        <b>Tổng tiền: <%= number_to_currency(cart.total_amount.to_i, precision: 0, unit: "") %>₫</b>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-6 d-flex align-items-center">
+      <div class="continue">
+        <%= link_to "Thêm sản phẩm khác vào giỏ hàng", root_path %>
+      </div>
+    </div>
+    <div class="col-2"></div>
+    <div class="col-4 text-center">
+      <div class="d-flex justify-content-around align-items-center">
+        <div class="cart-subtotal">
+          <b>Thành tiền: <%= number_to_currency(cart.total_amount.to_i, precision: 0, unit: "") %>₫</b>
+        </div>
+        <%= link_to cart_checkout_path, class: "btn btn-lg btn-primary btn_checkout" do %>
+          Mua hàng <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
