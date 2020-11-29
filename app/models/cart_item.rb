@@ -3,7 +3,7 @@ class CartItem < ApplicationRecord
   belongs_to :product
 
   validates :amount, presence: true
-  validates :quantity, presence: true, numericality: {only_integer: true, greater_than: 1}
+  validates :quantity, presence: true, numericality: {only_integer: true, greater_than: 0}
   validates :price, presence: true
   validates :delivery_fee, presence: true
   # validate :validate_quantity
@@ -11,4 +11,9 @@ class CartItem < ApplicationRecord
   # def validate_quantity
   #   errors.add(:quantity, "Out of stock") if quantity > product.quantity
   # end
+  #
+
+  def amount
+    quantity * price
+  end
 end

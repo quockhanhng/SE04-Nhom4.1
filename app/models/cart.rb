@@ -4,4 +4,8 @@ class Cart < ApplicationRecord
   has_many :cart_items
 
   enum status: [:active, :done].freeze
+
+  def total_amount
+    cart_items.sum(:amount)
+  end
 end
