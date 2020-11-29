@@ -1,0 +1,44 @@
+<%= render "share/header" %>
+<div id="wrapper" class="container">
+  <h3>CHECKOUT</h3><br>
+  <div class="cart-page-product-header row">
+    <div class="col-4"><p>Sản phẩm</p></div>
+    <div class="col-2"><p>Giá bán</p></div>
+    <div class="col-3"><p>Số lượng</p></div>
+    <div class="col-3"><p>Thành tiền</p></div>
+  </div>
+  <div class="line"></div>
+  <% @cart_items.each do |cart_item| %>
+    <div id="cart_item_<%= cart_item.id %>">
+      <div class="cart-page-product-content row">
+        <div class="col-4">
+          <div class="d-flex ml-lg-5">
+            <div>
+              <%= image_tag cart_item.product.image.url, size: "50x100" %>
+            </div>
+            <div class="ml-3">
+              <%= link_to cart_item.product.name, product_path(cart_item.product), class: "title" %><br/>
+              <a href="" class="category"><%= cart_item.product.find_name_category %></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-2">
+          <p class="price"><%= number_to_currency(cart_item.product.price.to_i, precision: 0, unit: "") %>₫</p>
+        </div>
+        <div class="col-3">
+          <p class="quantity">
+            <%= cart_item.quantity %>
+          </p>
+        </div>
+        <div class="col-3">
+          <p class="amount"><%= number_to_currency(cart_item.amount.to_i, precision: 0, unit: "") %>₫</p>
+        </div>
+      </div>
+      <div class="line-black"></div>
+    </div>
+  <% end %>
+  <div class="check_out">
+    <%= render "check_out_confirm", cart: @cart %>
+  </div>
+  <%= render "share/footer" %>
+</div>

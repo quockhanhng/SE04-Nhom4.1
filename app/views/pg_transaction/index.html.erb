@@ -1,0 +1,38 @@
+<%= render "share/header" %>
+<div id="wrapper" class="container transaction_index_area">
+  <h3>Danh sách các giao dịch</h3><br>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th scope="col" class="text-center">ID</th>
+      <th scope="col" class="text-center">Các sản phẩm</th>
+      <th scope="col" class="text-center">Trạng thái</th>
+      <th scope="col" class="text-center">Phương thức thanh toán</th>
+      <th scope="col" class="text-center">Tổng tiền</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @pg_transactions.each do |pg_transaction| %>
+      <tr>
+        <th scope="row" class="text-center"><%= pg_transaction.id %></th>
+        <td>
+          <% pg_transaction.cart.cart_items.each do |cart_item| %>
+            <div class="d-flex align-items-center mb-3">
+              <div class="mr-3">
+                <%= image_tag cart_item.product.image.url, size: "80x50" %>
+              </div>
+              <div>
+                <%= link_to cart_item.product.name, product_path(cart_item.product), class: "title" %><br/>
+              </div>
+            </div>
+          <% end %>
+        </td>
+        <td class="text-center text-success"><%= t("pg_transaction.#{pg_transaction.status}") %></td>
+        <td class="text-center align-items-center"><%= t("pg_transaction.#{pg_transaction.payment_type}") %></td>
+        <td class="text-center"><%= (pg_transaction.charge_amount + pg_transaction.total_delivery_fee).round(2) %><%= pg_transaction.paypal? ? "$" : "₫" %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%= render "share/footer" %>
+</div>
