@@ -1,33 +1,35 @@
 <head>
   <script>
-      paypal.Buttons({
-          style: {
-              layout: 'horizontal'
-          },
-          createOrder: function (data, actions) {
-              return actions.order.create({
-                  purchase_units: [{
-                      amount: {
-                          value: <%= ((cart.total_delivery_fee.to_i + cart.total_amount.to_i)*0.000043).round(2) %>
-                      }
-                  }]
-              });
-          },
-          onApprove: function (data, actions) {
-              return actions.order.capture().then(function (details) {
-                  alert('Thanh toán hoàn thành!');
-                  $.ajax({
-                      url: "/pg_transaction",
-                      type: "post",
-                      data: {
-                          details: details,
-                          cart_id: <%= cart.id %>,
-                          total_delivery_fee: <%= (cart.total_delivery_fee.to_i*0.000043).round(2) %>
-                      }
-                  })
-              });
-          }
-      }).render('#paypal-button-container');
+      $(document).on('turbolinks:load', function () {
+          paypal.Buttons({
+              style: {
+                  layout: 'horizontal'
+              },
+              createOrder: function (data, actions) {
+                  return actions.order.create({
+                      purchase_units: [{
+                          amount: {
+                              value: <%= ((cart.total_delivery_fee.to_i + cart.total_amount.to_i)*0.000043).round(2) %>
+                          }
+                      }]
+                  });
+              },
+              onApprove: function (data, actions) {
+                  return actions.order.capture().then(function (details) {
+                      alert('Thanh toán hoàn thành!');
+                      $.ajax({
+                          url: "/pg_transaction",
+                          type: "post",
+                          data: {
+                              details: details,
+                              cart_id: <%= cart.id %>,
+                              total_delivery_fee: <%= (cart.total_delivery_fee.to_i*0.000043).round(2) %>
+                          }
+                      })
+                  });
+              }
+          }).render('#paypal-button-container');
+      })
   </script>
 </head>
 <div class="checkout_area">
@@ -65,22 +67,40 @@
             tiền: <%= number_to_currency(cart.total_delivery_fee.to_i + cart.total_amount.to_i, precision: 0, unit: "") %>
             ₫</b>
         </div>
-        <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Thanh toán
         </button>
-
-        <!-- Modal -->
         <div class="modal fade mt-5" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Chọn phương thức thanh toán</h5>
+                <h5 class="modal-title text-center" id="exampleModalLabel">Chọn phương thức thanh toán</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <div id="paypal-button-container"></div>
+                <span class="">
+                  <div id="paypal-button-container"></div>
+                </span>
+                <h4>Hoặc</h4>
+                <div class="text-center">
+                  <% require 'digest' %>
+                  <%
+                    vnp_CreateDate = DateTime.now.strftime("%Y%m%d%I%M%S")
+                    vnp_TxnRef = @cart.id
+                    vnp_Amount = (cart.total_delivery_fee.to_i + cart.total_amount.to_i) * 100
+                    return_url = "http://localhost:3000/pg_transaction/new"
+                    hashdata = "vnp_Amount=#{vnp_Amount}&vnp_BankCode=NCB&vnp_Command=pay&vnp_CreateDate=#{vnp_CreateDate}&vnp_CurrCode=VND&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Noi+dung+thanh+toan&vnp_OrderType=billpayment&vnp_ReturnUrl=#{return_url}&vnp_TmnCode=48VH08HA&vnp_TxnRef=#{vnp_TxnRef}&vnp_Version=2.0.0"
+                    hash = Digest::SHA2.new(256).hexdigest ('V0L5ZROOG6SRY8WDOZ8R03MOGTD1W8G0' + hashdata)
+                    vnpSecureHash = hash
+                    url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=#{vnp_Amount}&vnp_BankCode=NCB&vnp_Command=pay&vnp_CreateDate=#{vnp_CreateDate}&vnp_CurrCode=VND&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Noi%2Bdung%2Bthanh%2Btoan&vnp_OrderType=billpayment&vnp_ReturnUrl=#{return_url}&vnp_TmnCode=48VH08HA&vnp_TxnRef=#{vnp_TxnRef}&vnp_Version=2.0.0&" + 'vnp_SecureHashType=SHA256&vnp_SecureHash=' + vnpSecureHash
+                  %>
+                  <%= link_to url do %>
+                    <button class="btn-success btn">Thanh toán với VNPAY</button>
+                    <br>
+                    <%= image_tag "vnpay.png" %>
+                  <% end %>
+                </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -92,3 +112,8 @@
     </div>
   </div>
 </div>
+<script lang="js">
+    $.post("vnpay_create_payment.php", function (data) {
+        $("#123").attr("href", data)
+    });
+</script>

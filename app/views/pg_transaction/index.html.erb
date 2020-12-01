@@ -29,7 +29,11 @@
         </td>
         <td class="text-center text-success"><%= t("pg_transaction.#{pg_transaction.status}") %></td>
         <td class="text-center align-items-center"><%= t("pg_transaction.#{pg_transaction.payment_type}") %></td>
-        <td class="text-center"><%= (pg_transaction.charge_amount + pg_transaction.total_delivery_fee).round(2) %><%= pg_transaction.paypal? ? "$" : "₫" %></td>
+        <% if pg_transaction.paypal? %>
+          <td class="text-center"><%= (pg_transaction.charge_amount + pg_transaction.total_delivery_fee).round(2) %><%="$"%></td>
+        <% else %>
+          <td class="text-center"><%= number_to_currency((pg_transaction.total_delivery_fee.to_i + pg_transaction.charge_amount.to_i)/100, precision: 0, unit: "") %><%="₫"%></td>
+        <% end %>
       </tr>
     <% end %>
     </tbody>

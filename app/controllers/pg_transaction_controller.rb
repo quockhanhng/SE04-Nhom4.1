@@ -3,6 +3,28 @@ class PgTransactionController < ApplicationController
   before_action :check_role
   skip_before_action :verify_authenticity_token
 
+  def new
+    @pg_transaction = PgTransaction.new
+    if params[:vnp_SecureHash]
+      cart_id = params[:vnp_TxnRef]
+      charge_id = params[:vnp_TransactionNo]
+      charge_amount = params[:vnp_Amount]
+      @pg_transaction.status = "paid"
+      @pg_transaction.charge_id = charge_id
+      @pg_transaction.charge_amount = charge_amount
+      @pg_transaction.cart_id = cart_id
+      @pg_transaction.total_delivery_fee = 0
+      @pg_transaction.payment_type = "vnpay"
+      if @pg_transaction.save
+        Cart.find_by_id(cart_id).update(status: "done")
+        redirect_to pg_transaction_index_path
+      else
+        flash[:danger] = "Có lỗi xảy ra trong quá trình thanh toán"
+        redirect_to cart_checkout_path
+      end
+    end
+  end
+
   def create
     @pg_transaction = PgTransaction.new
     if params[:details]

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
     get "/cart/checkout", to: "carts#checkout"
 
-    resources :pg_transaction, only: %i(index create update)
+    resources :pg_transaction, only: %i(index create update new)
 
     resources :cart_items, only: %i(update create destroy)
 
